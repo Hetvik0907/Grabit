@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="login-overlay">
+    <div class="login-modal">
+      <div class="modal-content">
+        <div class="left-section">
+          <img src="https://cdn.zeptonow.com/web-static-assets-prod/artifacts/12.52.1/images/header/primary-logo.svg" alt="Zepto" class="zepto-logo">
+          <h1>Groceries delivered in 10 minutes</h1>
+          <form action="/getotp" method="post">
+          <div class="phone-input">
+            <div class="country-code">Email Add:</div>
+            <input type="email" placeholder="Enter Email Address" name="email" id="otpfield">
+            <button>Get Otp</button>
+          </form> 
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              const otpForm = document.querySelector('form[action="/getotp"]'); // Select OTP form
+              const verifyForm = document.querySelector('form[action="/verifyotp"]'); // Select Verify OTP form
+            
+              otpForm.addEventListener("submit", async function (event) {
+                event.preventDefault(); // Prevent default form submission
+            
+                const emailField = document.getElementById("otpfield");
+                const email = emailField.value.trim();
+            
+                if (!email) {
+                  alert("Please enter a valid email address.");
+                  return;
+                }
+            
+                try {
+                  const response = await fetch("/getotp", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams({ email: email })
+                  });
+            
+                  if (!response.ok) {
+                    throw new Error("Failed to send OTP.");
+                  }
+            
+                  alert("OTP sent successfully!"); // Show success alert
+                  document.getElementById("verifyemail").value = email; // Store email for verification
+                } catch (error) {
+                  console.error("Error:", error);
+                  alert("Something went wrong. Please try again.");
+                }
+              });
+            
+              verifyForm.addEventListener("submit", async function (event) {
+                event.preventDefault(); // Prevent form submission
+            
+                const email = document.getElementById("verifyemail").value;
+                const otp = document.querySelector('input[name="otp"]').value.trim();
+            
+                if (!otp) {
+                  alert("Please enter the OTP.");
+                  return;
+                }
+            
+                try {
+                  const response = await fetch("/verifyotp", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams({ email: email, otp: otp })
+                  });
+            
+                  const result = await response.json();
+            
+                  if (response.ok) {
+                    alert("OTP verified successfully!");
+                    window.location.href = "/zepto"; // Redirect to /zepto on success
+                  } else {
+                    alert(result.message || "Invalid OTP, please try again."); // Show error message
+                  }
+                } catch (error) {
+                  console.error("Error:", error);
+                  alert("Something went wrong. Please try again.");
+                }
+              });
+            });
+            </script>
+            
+                      
+          </div>
+          <form action="/verifyotp" method="post">
+          <div class="phone-input">
+            <div class="country-code">otp</div>
+            <input type="hidden" name="email" id="verifyemail">
+            <input type="text" placeholder="Enter Otp" name="otp" id="otpfield">
+            
+          </div>
+          <button class="continue-btn">Continue</button>
+        </form>
+        <script>
+          document.querySelector("#otpfield").addEventListener("input",function(event){
+            document.querySelector("#verifyemail").value = event.target.value;
+          });
+        </script>
+          <p class="terms" style="margin-top: 20px;">           
+          </p>
+        </div>
+  
+        <div class="right-section">
+          <div class="app-info">
+            <h2>Order faster & easier everytime</h2>
+            <p>with the Zepto App</p>
+            
+            <div class="app-buttons">
+              <a href="#" class="store-button">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg5Igs_sah8uNlaTFmYV6PF5IhdGOlCVkfgA&s" alt="Get it on Google Play" class="play-store">
+              </a>
+              <a href="#" class="store-button">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDFaq49w_hMvgqSnM3wGSNKCtS1dZ9duBBow&s" alt="Download on the App Store" class="app-store">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <style>
+  .login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .login-modal {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 800px;
+    overflow: hidden;
+  }
+  
+  .modal-content {
+    display: flex;
+    height: 500px;
+  }
+  
+  .left-section {
+    flex: 1;
+    padding: 32px;
+    background: #6B21A8;
+    color: white;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .zepto-logo {
+    width: 120px;
+    margin-bottom: 24px;
+  }
+  
+  .left-section h1 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    line-height: 1.2;
+  }
+  
+  .phone-input {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  
+  .country-code {
+    padding: 12px 16px;
+    background: #f8f9fa;
+    color: #1a1a1a;
+    border-right: 1px solid #e2e8f0;
+  }
+  
+  .phone-input input {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  .continue-btn {
+    background: #FF1493;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  
+  .continue-btn:hover {
+    opacity: 0.9;
+  }
+  
+  .terms {
+    margin-top: auto;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .terms a {
+    color: #FF69B4;
+    text-decoration: none;
+  }
+  
+  .right-section {
+    flex: 1;
+    background: #FFF0F5;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .app-info {
+    text-align: center;
+  }
+  
+  .app-info h2 {
+    color: #6B21A8;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .app-info p {
+    color: #666;
+    margin-bottom: 24px;
+  }
+  
+  .app-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .store-button img {
+    height: 40px;
+    width: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .login-modal {
+      margin: 16px;
+      height: auto;
+    }
+  
+    .modal-content {
+      flex-direction: column;
+      height: auto;
+    }
+  
+    .right-section {
+      display: none;
+    }
+  }
+  </style>
+</body>
+</html>

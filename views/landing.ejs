@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<style>
+  :root {
+    --primary-color: #6E2FFF;
+    --banner-gradient: linear-gradient(to right, #26C9C3, #4FA8E0);
+  }
+  
+  .site-header {
+    width: 100%;
+    background: #fff;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  
+  .nav-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .logo {
+    height: 32px;
+  }
+  
+  .logo-img {
+    height: 100%;
+  }
+  
+  .location-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+  }
+  
+  .search-container {
+    flex: 1;
+    max-width: 600px;
+    position: relative;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 12px 16px 12px 40px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+  
+  .hero-banner {
+    background: var(--banner-gradient);
+    padding: 48px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px;
+    margin: 24px;
+  }
+  
+  .banner-content {
+    color: white;
+  }
+  
+  .banner-content h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  
+  .banner-content p {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .order-btn {
+    background: white;
+    color: #26C9C3;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .order-btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  .banner-image {
+    max-width: 50%;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-container {
+      flex-wrap: wrap;
+    }
+  
+    .search-container {
+      order: 3;
+      max-width: 100%;
+    }
+  
+    .hero-banner {
+      flex-direction: column;
+      text-align: center;
+      padding: 32px 16px;
+    }
+  
+    .banner-image {
+      max-width: 100%;
+      margin-top: 24px;
+    }
+  
+    .banner-content h1 {
+      font-size: 32px;
+    }
+  
+    .banner-content p {
+      font-size: 18px;
+    }
+  }
+  .coffee-section {
+    padding: 24px;
+    max-width: 1440px;
+    margin: 0 auto;
+    background: #fff;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .section-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+  
+  .see-all {
+    color: #FF1493;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .products-container {
+    position: relative;
+  }
+  
+  .products-wrapper {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 8px 4px;
+  }
+  
+  .products-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .product-card {
+    flex: 0 0 280px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    position: relative;
+    border: 1px solid #f0f0f0;
+    transition: transform 0.2s ease;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .discount-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #6B21A8;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.2;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .product-info h3 {
+    font-size: 16px;
+    margin-bottom: 4px;
+    color: #1a1a1a;
+  }
+  
+  .volume {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .price-container {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .price {
+    font-weight: 600;
+    font-size: 18px;
+  }
+  
+  .original-price {
+    color: #666;
+    text-decoration: line-through;
+    font-size: 14px;
+  }
+  
+  .add-to-cart, .notify-btn {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  
+  .add-to-cart {
+    background: #FF1493;
+    color: white;
+  }
+  
+  .add-to-cart:hover {
+    opacity: 0.9;
+  }
+  
+  .notify-btn {
+    background: #f0f0f0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .out-of-stock {
+    opacity: 0.8;
+  }
+  
+  .out-of-stock-overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  
+  .scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+  
+  .scroll-btn.next {
+    right: -20px;
+  }
+  
+  @media (max-width: 768px) {
+    .coffee-section {
+      padding: 16px;
+    }
+    
+    .scroll-btn {
+      display: none;
+    }
+  }
+  * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .category-grid {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 10px 0;
+            scrollbar-width: none;
+        }
+
+        .category-item {
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .category-name {
+            font-size: 14px;
+            color: #333;
+        }
+        .hero-section {
+        padding: 60px 20px;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .main-heading {
+        font-size: 64px;
+        line-height: 1.2;
+        color: #6B7280;
+        font-weight: 600;
+        margin-bottom: 24px;
+    }
+
+    .sub-heading {
+        font-size: 36px;
+        color: #6B7280;
+        font-weight: 500;
+    }
+
+    .zepto-text {
+        background: linear-gradient(90deg, #7C3AED, #C026D3);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+    }
+
+    .heart {
+        display: inline-block;
+        margin-left: 8px;
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-heading {
+            font-size: 40px;
+        }
+
+        .sub-heading {
+            font-size: 24px;
+        }
+    }
+    .how-it-works {
+        padding: 50px 0;
+        text-align: center;
+    }
+
+    .how-it-works h1 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 40px;
+    }
+
+    .steps-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .step-card {
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        flex: 1;
+        max-width: 350px;
+    }
+
+    .icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 20px;
+    }
+
+    .icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .step-card h2 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .step-card p {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+        .steps-container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-card {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+    }
+    .site-footer {
+  background: #fff;
+  padding: 48px 24px;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.popular-searches {
+  max-width: 1200px;
+  margin: 0 auto 48px;
+}
+
+.popular-searches h2 {
+  font-size: 20px;
+  margin-bottom: 24px;
+  color: #1a1a1a;
+}
+
+.search-category {
+  margin-bottom: 16px;
+}
+
+.search-category .label {
+  color: #1a1a1a;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.search-category .links {
+  display: inline;
+}
+
+.search-category .links a {
+  color: #666;
+  text-decoration: none;
+  margin-right: 8px;
+}
+
+.search-category .links a:hover {
+  color: #FF1493;
+}
+
+.categories-grid {
+  max-width: 1200px;
+  margin: 0 auto 48px;
+}
+
+.categories-grid h2 {
+  font-size: 20px;
+  margin-bottom: 24px;
+  color: #1a1a1a;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+}
+
+.grid-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.grid-column a {
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.grid-column a:hover {
+  color: #FF1493;
+}
+
+.main-footer {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 48px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 48px;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-logo {
+  height: 32px;
+  width: auto;
+}
+
+.social-links {
+  display: flex;
+  gap: 16px;
+}
+
+.social-links a {
+  color: #666;
+  text-decoration: none;
+}
+
+.copyright {
+  color: #666;
+  font-size: 14px;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.link-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.link-column a {
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.link-column a:hover {
+  color: #FF1493;
+}
+
+.app-downloads {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.app-downloads h3 {
+  font-size: 16px;
+  color: #1a1a1a;
+}
+
+.app-button img {
+  height: 40px;
+  width: auto;
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    padding: 32px 16px;
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-links {
+    grid-template-columns: 1fr;
+  }
+}
+  </style>
+<body>
+  <header class="site-header">
+    <nav class="nav-container">
+      <div class="nav-left">
+        <a href="/" class="logo">
+          <img src="https://cdn.zeptonow.com/web-static-assets-prod/artifacts/12.52.1/images/header/primary-logo.svg" alt="Zepto" class="logo-img">
+        </a>
+        <button class="location-btn">
+          <span>Select Location</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="search-container">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input type="search" placeholder="Search for 'chocolate box'" class="search-input">
+      </div>
+  
+      <div class="nav-right">
+        <a href="/login" class="nav-link">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M20 21a8 8 0 10-16 0"/>
+          </svg>
+          <span href="/login">Login</span>
+        </a>
+        <a href="/login" class="nav-link">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <path d="M3 6h18"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span>Cart</span>
+        </a>
+      </div>
+    </nav>
+  
+    <div class="hero-banner">
+      <div class="banner-content">
+        <h1>Paan Corner</h1>
+        <p>Smoking Accessories, Mints & More</p>
+        <button class="order-btn" id="orderNowBtn">Order Now</button> <!-- Added ID -->
+      </div>
+      <div class="banner-image">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-22%20212635-gV9yjscM9kIvb8pTwNnbvZeF1RK4pg.png" 
+             alt="Paan Corner Products" class="product-image">
+      </div>
+    </div>
+  </header>
+  <section id="coffee-text" class="coffee-section" style="margin-left: 5px;">
+    <div class="section-header">
+      <h2 >Coffee Lovers</h2>
+    </div>
+  
+    <div class="products-container">
+      <div class="products-wrapper" id="productsWrapper">
+        <!-- Spanish Coffee -->
+        <% for (let Pro of Products) { %>
+          <% if (Pro.category == "Coffee") { %>
+            <div class="product-card">
+              <div class="discount-badge">
+                <span><%= Pro.discount %>%</span>
+                <span>Off</span>
+              </div>
+              <img src="<%= Pro.image %>" class="product-image">
+              <div class="product-info">
+                <h3><%= Pro.name %></h3>
+                <span class="volume"><%= Pro.volume %></span>
+                <div class="price-container">
+                  <span class="price">₹<%= Pro.price %></span>
+                  <span class="original-price">₹<%= Pro.original_price %></span>
+                </div>
+                <a class="add-to-cart" href="/login" >Order now</a>
+              </div>
+            </div>
+          <% } %>
+        <% } %>
+        
+        
+  
+      <button class="scroll-btn next" id="nextBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+    <section class="category-section" id="newInStore" style="margin-left: 40px;"> <!-- Added ID -->
+      <h2 class="category-title">New In Store</h2>
+      <div class="category-grid">
+        
+        <div class="category-item">
+          
+            <img id="coffee" alt="Mobile Accessories" loading="lazy" width="36" height="96" decoding="async" data-nimg="1" class="relative overflow-hidden false " sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAyTCpAxP0hsJJ1wR1ZqjENDDTmcJakYPe2A&s" style="color: transparent; object-fit: fill;">
+        </div>
+        <div class="category-item">
+          
+          <img id="vegetable" alt="Mobile Accessories" loading="lazy" width="36" height="96" decoding="async" data-nimg="1" class="relative overflow-hidden false " sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" src="https://media.istockphoto.com/id/1256188089/vector/fruits-and-vegetables-black-glyph-icon.jpg?s=612x612&w=0&k=20&c=aSXDG4T2kMk-4uvTypEvJv6aKvw2t1n2GNe4Guu4Ne4=" style="color: transparent; object-fit: fill;">
+      </div>
+      <div class="category-item">
+          
+        <img id="icecreme" alt="Mobile Accessories" loading="lazy" width="36" height="96" decoding="async" data-nimg="1" class="relative overflow-hidden false " sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkz1sHlS9qNn88M3x9swWv_zeBiNx_scvCog&s" style="color: transparent; object-fit: fill;">
+    </div>
+    <div class="category-item">
+          
+      <img id="electronics" alt="Mobile Accessories" loading="lazy" width="36" height="96" decoding="async" data-nimg="1" class="relative overflow-hidden false " sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb94qtgsGKm6QBACSRDSesF6gxkzYd-MZlKQ&s" style="color: transparent; object-fit: fill;">
+  </div>
+  <div class="category-item">
+          
+    <img id="dryfruits" alt="Mobile Accessories" loading="lazy" width="36" height="96" decoding="async" data-nimg="1" class="relative overflow-hidden false " sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" src="https://cdn.iconscout.com/icon/premium/png-256-thumb/bean-2778009-2307192.png" style="color: transparent; object-fit: fill;">
+</div>
+      
+      </div>
+    </section>
+    <script>
+      document.getElementById("orderNowBtn").addEventListener("click", function() {
+        document.getElementById("newInStore").scrollIntoView({ behavior: "smooth" });
+      });
+
+      document.getElementById("coffee").addEventListener("click", function() {
+        document.getElementById("coffee-text").scrollIntoView({ behavior: "smooth" });
+      });
+
+      document.getElementById("vegetable").addEventListener("click", function() {
+        document.getElementById("vegetable-text").scrollIntoView({ behavior: "smooth" });
+      });
+
+      document.getElementById("icecreme").addEventListener("click", function() {
+        document.getElementById("icecreme-text").scrollIntoView({ behavior: "smooth" });
+      });
+
+      document.getElementById("electronics").addEventListener("click", function() {
+        document.getElementById("electronics-text").scrollIntoView({ behavior: "smooth" });
+      });
+
+      
+      document.getElementById("dryfruits").addEventListener("click", function() {
+        document.getElementById("dryfruits-text").scrollIntoView({ behavior: "smooth" });
+      });
+    </script>
+    
+    <section id="vegetable-text" class="coffee-section" style="margin-left: 5px;">
+      <div class="section-header">
+        <h2>Vegetables</h2>
+       
+      </div>
+    
+      <div class="products-container">
+        <div class="products-wrapper" id="productsWrapper">
+          <!-- Spanish Coffee -->
+          <% for (let Pro of Products) { %>
+            <% if (Pro.category == "vegetable") { %>
+              <div class="product-card">
+                <div class="discount-badge">
+                  <span><%= Pro.discount %>%</span>
+                  <span>Off</span>
+                </div>
+                <img src="<%= Pro.image %>" class="product-image">
+                <div class="product-info">
+                  <h3><%= Pro.name %></h3>
+                  <span class="volume"><%= Pro.volume %></span>
+                  <div class="price-container">
+                    <span class="price">₹<%= Pro.price %></span>
+                    <span class="original-price">₹<%= Pro.original_price %></span>
+                  </div>
+                  <a class="add-to-cart" href="/login" >Order now</a>
+                </div>
+              </div>
+            <% } %>
+          <% } %>
+          
+          
+    
+        <button class="scroll-btn next" id="nextBtn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    
+    <section id="icecreme-text" class="coffee-section" style="margin-left: 5px;">
+      <div class="section-header">
+        <h2>Ice Creame</h2>
+        
+      </div>
+    
+      <div class="products-container">
+        <div class="products-wrapper" id="productsWrapper">
+          <!-- Spanish Coffee -->
+          <% for (let Pro of Products) { %>
+            <% if (Pro.category == "Ice Cream") { %>
+              <div class="product-card">
+                <div class="discount-badge">
+                  <span><%= Pro.discount %>%</span>
+                  <span>Off</span>
+                </div>
+                <img src="<%= Pro.image %>" class="product-image">
+                <div class="product-info">
+                  <h3><%= Pro.name %></h3>
+                  <span class="volume"><%= Pro.volume %></span>
+                  <div class="price-container">
+                    <span class="price">₹<%= Pro.price %></span>
+                    <span class="original-price">₹<%= Pro.original_price %></span>
+                  </div>
+                  <a class="add-to-cart" href="/login" >Order now</a>
+                </div>
+              </div>
+            <% } %>
+          <% } %>
+          
+          
+    
+        <button class="scroll-btn next" id="nextBtn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+    
+    <section id="electronics-text" class="coffee-section" style="margin-left: 5px;">
+      <div class="section-header">
+        <h2>Electronics</h2>
+        
+      </div>
+    
+      <div class="products-container">
+        <div class="products-wrapper" id="productsWrapper">
+          <!-- Spanish Coffee -->
+          <% for (let Pro of Products) { %>
+            <% if (Pro.category == "Electronics") { %>
+              <div class="product-card">
+                <div class="discount-badge">
+                  <span><%= Pro.discount %>%</span>
+                  <span>Off</span>
+                </div>
+                <img src="<%= Pro.image %>" class="product-image">
+                <div class="product-info">
+                  <h3><%= Pro.name %></h3>
+                  <span class="volume"><%= Pro.volume %></span>
+                  <div class="price-container">
+                    <span class="price">₹<%= Pro.price %></span>
+                    <span class="original-price">₹<%= Pro.original_price %></span>
+                  </div>
+                  <a class="add-to-cart" href="/login" >Order now</a>
+                </div>
+              </div>
+            <% } %>
+          <% } %>
+          
+          
+    
+        <button class="scroll-btn next" id="nextBtn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <section id="dryfruits-text" class="coffee-section" style="margin-left: 5px;">
+      <div class="section-header">
+        <h2>Dryfruits</h2>
+        
+      </div>
+    
+      <div class="products-container">
+        <div class="products-wrapper" id="productsWrapper">
+          <!-- Spanish Coffee -->
+          <% for (let Pro of Products) { %>
+            <% if (Pro.category == "Dryfruits") { %>
+              <div class="product-card">
+                <div class="discount-badge">
+                  <span><%= Pro.discount %>%</span>
+                  <span>Off</span>
+                </div>
+                <img src="<%= Pro.image %>" class="product-image">
+                <div class="product-info">
+                  <h3><%= Pro.name %></h3>
+                  <span class="volume"><%= Pro.volume %></span>
+                  <div class="price-container">
+                    <span class="price">₹<%= Pro.price %></span>
+                    <span class="original-price">₹<%= Pro.original_price %></span>
+                  </div>
+                  <a class="add-to-cart" href="/login" >Order now</a>
+                </div>
+              </div>
+            <% } %>
+          <% } %>
+          
+          
+    
+        <button class="scroll-btn next" id="nextBtn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+    <div class="hero-section">
+      <h1 class="main-heading">The place that fits all<br>your needs</h1>
+      <p class="sub-heading">
+          Crafted with love from 
+          <span class="zepto-text">Zepto Team</span>
+          <span class="heart">❤️</span>
+      </p>
+  </div>
+
+  <div class="how-it-works">
+    <h1>How it Works</h1>
+    
+    <div class="steps-container">
+        <!-- Step 1 -->
+        <div class="step-card">
+            <div class="icon">
+                <img src="https://cdn.zeptonow.com/web-static-assets-prod/artifacts/12.52.1/images/pdp/place-order.svg" alt="Mobile app icon">
+            </div>
+            <h2>Open the app</h2>
+            <p>Choose from over 7000 products across groceries, fresh fruits & veggies, meat, pet care, beauty items & more</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+            <div class="icon">
+                <img src="https://cdn.zeptonow.com/web-static-assets-prod/artifacts/12.52.1/images/pdp/do-not-blink.svg" alt="Order items icon">
+            </div>
+            <h2>Place an order</h2>
+            <p>Add your favourite items to the cart & avail the best offers</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+            <div class="icon">
+                <img src="https://cdn.zeptonow.com/web-static-assets-prod/artifacts/12.52.1/images/pdp/enjoy.svg" alt="Delivery icon">
+            </div>
+            <h2>Get free delivery</h2>
+            <p>Experience lighting-fast speed & get all your items delivered in 10 minutes</p>
+        </div>
+    </div>
+</div>
+<footer class="site-footer">
+  <!-- Popular Searches Section -->
+  <section class="popular-searches">
+    <h2>Popular Searches</h2>
+    
+    <div class="search-category">
+      <span class="label">Products :</span>
+      <div class="links">
+        <a href="#">Bottle gourd</a>
+        <a href="#">Lady finger</a>
+        <a href="#">Potato</a>
+        <a href="#">Lemon</a>
+        <a href="#">Dalchini</a>
+        <a href="#">Fennel seeds</a>
+        <a href="#">Blueberry</a>
+        <a href="#">Papaya</a>
+        <a href="#">Dragon fruit</a>
+      </div>
+    </div>
+
+    <div class="search-category">
+      <span class="label">Brands :</span>
+      <div class="links">
+        <a href="#">Yakult</a>
+        <a href="#">My Muse</a>
+        <a href="#">Aashirvaad Atta</a>
+        <a href="#">Too Yumm</a>
+        <a href="#">Lays</a>
+        <a href="#">Figaro Olive Oil</a>
+        <a href="#">Nandini Milk</a>
+        <a href="#">Amul</a>
+        <a href="#">Mother Dairy Near Me</a>
+        <a href="#">Fortune Oil</a>
+      </div>
+    </div>
+
+    <div class="search-category">
+      <span class="label">Categories :</span>
+      <div class="links">
+        <a href="#">Grocery</a>
+        <a href="#">Curd</a>
+        <a href="#">Hukka flavour</a>
+        <a href="#">Paan shop near me</a>
+        <a href="#">Eggs price</a>
+        <a href="#">Cheese slice</a>
+        <a href="#">Fresh fruits</a>
+        <a href="#">Fresh vegetables</a>
+        <a href="#">Refined oil</a>
+        <a href="#">Butter price</a>
+        <a href="#">Paneer price</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Grid -->
+  <section class="categories-grid">
+    <h2>Categories</h2>
+    <div class="grid-container">
+      <div class="grid-column">
+        <a href="#">Fruits & Vegetables</a>
+        <a href="#">Baby Food</a>
+        <a href="#">Breakfast & Sauces</a>
+        <a href="#">Cleaning Essentials</a>
+        <a href="#">Homegrown Brands</a>
+      </div>
+      <div class="grid-column">
+        <a href="#">Atta, Rice, Oil & Dals</a>
+        <a href="#">Dairy, Bread & Eggs</a>
+        <a href="#">Tea, Coffee & More</a>
+        <a href="#">Home Needs</a>
+        <a href="#">Paan Corner</a>
+      </div>
+      <div class="grid-column">
+        <a href="#">Masala & Dry Fruits</a>
+        <a href="#">Cold Drinks & Juices</a>
+        <a href="#">Biscuits</a>
+        <a href="#">Electricals & Accessories</a>
+      </div>
+      <div class="grid-column">
+        <a href="#">Sweet Cravings</a>
+        <a href="#">Munchies</a>
+        <a href="#">Makeup & Beauty</a>
+        <a href="#">Hygiene & Grooming</a>
+      </div>
+      <div class="grid-column">
+        <a href="#">Frozen Food & Ice Creams</a>
+        <a href="#">Meats, Fish & Eggs</a>
+        <a href="#">Bath & Body</a>
+        <a href="#">Health & Baby Care</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Footer -->
+  <div class="main-footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-22%20214830-axO622ZpkIMh9piTGsd4kd4avTCIsg.png" alt="Zepto" class="footer-logo">
+        <div class="social-links">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p class="copyright">© KiranaKart Technologies Private Limited</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="link-column">
+          <a href="#">Home</a>
+          <a href="#">Delivery Areas</a>
+          <a href="#">Careers</a>
+          <a href="#">Customer Support</a>
+        </div>
+        <div class="link-column">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Responsible Disclosure Policy</a>
+          <a href="#">Mojo - a Zepto Blog</a>
+        </div>
+      </div>
+
+      <div class="app-downloads">
+        <h3>Download App</h3>
+        <a href="#" class="app-button">
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-22%20214830-axO622ZpkIMh9piTGsd4kd4avTCIsg.png" alt="Get it on Play Store">
+        </a>
+        <a href="#" class="app-button">
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-22%20214830-axO622ZpkIMh9piTGsd4kd4avTCIsg.png" alt="Get it on App Store">
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const wrapper = document.getElementById('productsWrapper');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    nextBtn.addEventListener('click', () => {
+      wrapper.scrollBy({
+        left: 300,
+        behavior: 'smooth'
+      });
+    });
+  
+    // Enable touch scroll
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+  
+    wrapper.addEventListener('mousedown', (e) => {
+      isDown = true;
+      startX = e.pageX - wrapper.offsetLeft;
+      scrollLeft = wrapper.scrollLeft;
+    });
+  
+    wrapper.addEventListener('mouseleave', () => {
+      isDown = false;
+    });
+  
+    wrapper.addEventListener('mouseup', () => {
+      isDown = false;
+    });
+  
+    wrapper.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - wrapper.offsetLeft;
+      const walk = (x - startX) * 2;
+      wrapper.scrollLeft = scrollLeft - walk;
+    });
+  });
+  </script>
+  
+</body>
+</html>
