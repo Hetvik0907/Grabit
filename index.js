@@ -13,7 +13,7 @@ const randomstring = require("randomstring");
 const nodemailer = require("nodemailer");
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); // ✅ Middleware for handling JSON requests
+app.use(express.json()); //  Middleware for handling JSON requests
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
@@ -25,7 +25,7 @@ function generateotp() {
   return randomstring.generate({ length: 4, charset: 'numeric' });
 }
 
-// 🚀 Send OTP Email
+//  Send OTP Email
 function sendOTP(email, otp) {
   const mailoptions = {
     from: 'hetvikpatel0907@gmail.com',
@@ -54,7 +54,7 @@ function sendOTP(email, otp) {
   });
 }
 
-// 🚀 Connect to MongoDB
+//  Connect to MongoDB
 const URL = "mongodb://127.0.0.1:27017/grabit";
 async function main() {
   await mongoose.connect(URL);
@@ -63,7 +63,7 @@ main()
   .then(() => console.log("Connected to the database"))
   .catch((err) => console.error("Database connection error:", err));
 
-// 🚀 Session Middleware
+//  Session Middleware
 app.use(
   session({
     secret: "your_secret_key",
@@ -79,19 +79,19 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// 🌟 **Routes** 🌟
+//  **Routes** 
 
 app.get("/", async (req, res) => {
   const Products = await Product.find();
   res.render("landing.ejs", { Products });
 });
 
-// 🚀 Login Page
+//  Login Page
 app.get("/login", (req, res) => {
   res.render("login.ejs");
 });
 
-// 🚀 Generate OTP & Reset Session on New Login
+//  Generate OTP & Reset Session on New Login
 app.post("/getotp", (req, res) => {
   const { email } = req.body;
   const otp = generateotp();
@@ -99,7 +99,7 @@ app.post("/getotp", (req, res) => {
 
   sendOTP(email, otp);
 
-  // ✅ Reset session correctly
+  //  Reset session correctly
   req.session.regenerate((err) => {
     if (err) {
       console.error("Error regenerating session:", err);
@@ -107,16 +107,16 @@ app.post("/getotp", (req, res) => {
     }
 
     req.session.email = email; // Store new email in session
-    req.session.cart = []; // ✅ Reset cart for new login
+    req.session.cart = []; // Reset cart for new login
 
-    console.log("🔄 New session started for:", email);
+    console.log(" New session started for:", email);
     res.cookie('otpCache', otpCache, { maxAge: 30000, httpOnly: true });
     res.status(200).json({ message: 'OTP sent successfully' });
   });
 });
 
 
-// 🚀 Verify OTP & Reset Session
+//  Verify OTP & Reset Session
 app.post("/verifyotp", (req, res) => {
   const { email, otp } = req.body;
 
@@ -127,14 +127,14 @@ app.post("/verifyotp", (req, res) => {
   if (otpCache[email] == otp.trim()) {
       delete otpCache[email];
 
-      // ✅ Reset session completely for new login
+      //  Reset session completely for new login
       req.session.regenerate((err) => {
           if (err) {
               return res.status(500).json({ message: "Session reset error" });
           }
 
           req.session.email = email;
-          req.session.cart = []; // ✅ Ensure cart is empty for new user
+          req.session.cart = []; //  Ensure cart is empty for new user
 
           return res.status(200).json({ message: "OTP verified successfully" });
       });
@@ -143,7 +143,7 @@ app.post("/verifyotp", (req, res) => {
   }
 });
 
-// 🚀 Render Zepto Main Page
+//  Render Zepto Main Page
 app.get("/zepto", async (req, res) => {
   const email = req.session.email;
   if (!email) {
@@ -159,7 +159,7 @@ app.get("/zepto", async (req, res) => {
 });
 
 
-// 🚀 Store Cart Items in Session
+//  Store Cart Items in Session
 app.post("/payment", (req, res) => {
   const email = req.session.email;
   if (!req.session.cart) req.session.cart = [];
@@ -176,7 +176,7 @@ app.post("/payment", (req, res) => {
 
 
 
-// 🚀 Render Second Page
+//  Render Second Page
 app.get("/order", (req, res) => {
   res.render("Secondpage.ejs", { cart: req.session.cart || [] });
   console.log("Update Cart:", req.session.cart);
@@ -199,7 +199,7 @@ app.post("/order",async (req,res)=>{
 
     await newOrder.save(); // Save order to the database
 
-    console.log("✅ Order Saved:", newOrder);
+    console.log(" Order Saved:", newOrder);
 
     // Clear session after saving order
     req.session.cart = [];
@@ -207,7 +207,7 @@ app.post("/order",async (req,res)=>{
 
     res.redirect("/order-confirmation"); // Redirect to a confirmation page
   } catch (error) {
-    console.error("❌ Error Saving Order:", error);
+    console.error(" Error Saving Order:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 })
@@ -219,14 +219,14 @@ app.get("/order-confirmation",(req,res)=>{
 })
 
 
-// 🚀 Logout Route (Clears Session)
+//  Logout Route (Clears Session)
 app.get("/logout", (req, res) => {
   req.session.destroy(() => {
     res.redirect("/login");
   });
 });
 
-// 🚀 Start Server
+//  Start Server
 app.listen(port, () => {
   console.log(`Website is live on port ${port}`);
 });
